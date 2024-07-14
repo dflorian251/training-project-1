@@ -6,8 +6,8 @@ import Nav from "../Pages/Shared/Nav.vue";
 </script>
 
 <template>
-     <header class="bg-gray-800 p-4 ">
+    <Nav />
+    <header class="bg-gray-800 p-4 ">
         <h1 class="text-white text-3xl">Charts</h1>
     </header>
-    <Nav />
 </template>

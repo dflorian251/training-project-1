@@ -5,6 +5,9 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import Nav from "../Shared/Nav.vue";
+import Checkbox from '@/Components/Checkbox.vue';
+
 
 const form = useForm({
     name: '',
@@ -21,6 +24,7 @@ const submit = () => {
 </script>
 
 <template>
+    <Nav />
     <GuestLayout>
         <Head title="Register" />
 
@@ -54,6 +58,32 @@ const submit = () => {
                 />
 
                 <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="role" value="Role" />
+                <div class="inline-block w-1/2">
+                    <InputLabel for="role"  class="font-light text-gray-500 text-center" value="Public" />
+                    <Checkbox
+                        class="mt-1 block w-full"
+                        name="role-checkbox"
+                        required
+                    />
+                </div>
+
+                <div class="inline-block w-1/2">
+                    <InputLabel for="role"  class="font-light text-gray-500 text-center" value="Admin" />
+                    <Checkbox
+                        class="mt-1 block w-full"
+                        name="role-checkbox"
+                        required
+                    />
+                </div>
+                <InputError class="mt-2" :message="form.errors.email" />
+            </div>
+
+            <div class="mt-4">
+                Select dropdown for choosing role...
             </div>
 
             <div class="mt-4">

@@ -3,6 +3,7 @@ import { computed } from 'vue';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import Nav from "../Shared/Nav.vue";
 
 const props = defineProps({
     status: {
@@ -20,6 +21,7 @@ const verificationLinkSent = computed(() => props.status === 'verification-link-
 </script>
 
 <template>
+    <Nav/>
     <GuestLayout>
         <Head title="Email Verification" />
 

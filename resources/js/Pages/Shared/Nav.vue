@@ -11,6 +11,8 @@ import { Link } from '@inertiajs/vue3';
             <li><Link :href="route('data')" class="text-white hover:text-gray-400">Data</Link></li>
             <li><Link :href="route('charts')" class="text-white hover:text-gray-400">Charts</Link></li>
             <li><Link :href="route('users')" class="text-white hover:text-gray-400">Users</Link></li>
+            <li><Link :href="route('login')" class="text-white hover:text-gray-400">Login</Link></li>
+            <li><Link :href="route('register')" class="text-white hover:text-gray-400">Register</Link></li>
         </ul>
     </nav>
 </template>

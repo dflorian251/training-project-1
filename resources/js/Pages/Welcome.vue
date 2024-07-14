@@ -32,10 +32,9 @@ function handleImageError() {
 </script>
 
 <template>
+    <Nav/>
     <header class="bg-gray-800 p-4 ">
         <h1 class="text-white text-3xl">Hello, {{ name }}</h1>
     </header>
-
-    <Nav/>
 
 </template>
