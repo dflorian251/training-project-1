@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -36,6 +37,8 @@ Route::get('/charts', function() {
 Route::get('/users', function() {
     return Inertia::render('Users');
 })->name('users');
+
+Route::post('/submit-form', [EventController::class, 'store'])->name('submit-form');
 
 
 
