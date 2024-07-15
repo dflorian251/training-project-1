@@ -61,19 +61,21 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <InputLabel for="role" value="Role" />
+                <!-- <InputLabel for="role" value="Role" />
                 <div class="inline-block w-1/2">
                     <InputLabel for="role"  class="font-light text-gray-500 text-center" value="Public" />
                     <Checkbox
+                        id="role"
                         class="mt-1 block w-full"
                         name="role-checkbox"
                         required
                     />
-                </div>
+                </div> -->
 
                 <div class="inline-block w-1/2">
                     <InputLabel for="role"  class="font-light text-gray-500 text-center" value="Admin" />
                     <Checkbox
+                        id="role"
                         class="mt-1 block w-full"
                         name="role-checkbox"
                         required
