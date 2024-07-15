@@ -1,14 +1,8 @@
 <script setup>
-import Nav from "../Pages/Shared/Nav.vue";
-
-
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 
 </script>
 
 <template>
-    <Nav />
-    <header class="bg-gray-800 p-4 ">
-        <h1 class="text-white text-3xl">Users</h1>
-    </header>
-
+    <AuthenticatedLayout></AuthenticatedLayout>
 </template>
