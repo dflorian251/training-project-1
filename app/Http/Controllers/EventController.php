@@ -35,13 +35,17 @@ class EventController extends Controller
         // $date = $validated['date'];
         // $people_attended = $validated['people_attended'];
         $name = $request->input('name');
-        $public = 1;
+        if ($request->input('publicity') === 'public') {
+            $eventVisibility = 1;
+        } else {
+            $eventVisibility = 0;
+        }
         $date = $request->input('date');
         $people_attended = $request->input('people_attended');
 
         $event = new Event([
             'name' => $name,
-            'public' => $public,
+            'public' => $eventVisibility,
             'date' => $date,
             'people_attended' => $people_attended
         ]);
