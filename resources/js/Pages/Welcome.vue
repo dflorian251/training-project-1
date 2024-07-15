@@ -37,4 +37,5 @@ function handleImageError() {
         <h1 class="text-white text-3xl">Hello, {{ name }}</h1>
     </header>
 
+
 </template>
