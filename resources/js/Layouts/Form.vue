@@ -4,6 +4,8 @@ import Checkbox from "../Components/Checkbox.vue";
 import InputLabel from "../Components/InputLabel.vue";
 import { ref } from 'vue';
 import axios from 'axios';
+import {createRouter} from 'vue-router';
+
 
 const formData = ref({
   name: '',
@@ -14,8 +16,16 @@ const formData = ref({
 
 const submitForm = async () => {
   try {
-    const response = await axios.post('/training-project-1/public/submit-form', formData.value);
+    const response = await axios.post('/training-project-1/public/submit-form', formData.value).then(function (response) {
+        window.location = response.data.redirect;
+    });
     console.log('Data submitted successfully:', response.data);
+    // errors.value = {}; // Clear errors on successful submission
+    if (response.data.redirect_url) {
+        // router.push(response.data.redirect_url); // Redirect to the URL provided by the server
+        this.$router.push('/training-project-1/public/');
+        console.log('Redirected...');
+    }
   } catch (error) {
     console.error('There was an error submitting the form:', error);
   }

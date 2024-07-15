@@ -36,7 +36,7 @@ class EventController extends Controller
         ]);
 
         if ($event->save()) {
-            return response()->json(['message' => 'Form submitted successfully']);
+            return ['redirect' => route('data')];
         } else {
             return response()->json(['message' => 'Problem occurred']);
         }
