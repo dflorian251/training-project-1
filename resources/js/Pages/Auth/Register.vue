@@ -5,12 +5,12 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
-import Checkbox from '@/Components/Checkbox.vue';
 
 
 const form = useForm({
     name: '',
     email: '',
+    role: '',
     password: '',
     password_confirmation: '',
 });
@@ -60,31 +60,12 @@ const submit = () => {
             </div>
 
             <div class="mt-4">
-                <!-- <InputLabel for="role" value="Role" />
-                <div class="inline-block w-1/2">
-                    <InputLabel for="role"  class="font-light text-gray-500 text-center" value="Public" />
-                    <Checkbox
-                        id="role"
-                        class="mt-1 block w-full"
-                        name="role-checkbox"
-                        required
-                    />
-                </div> -->
-
-                <div class="inline-block w-1/2">
-                    <InputLabel for="role"  class="font-light text-gray-500 text-center" value="Admin" />
-                    <Checkbox
-                        id="role"
-                        class="mt-1 block w-full"
-                        name="role-checkbox"
-                        required
-                    />
-                </div>
-                <InputError class="mt-2" :message="form.errors.email" />
-            </div>
-
-            <div class="mt-4">
-                Select dropdown for choosing role...
+                <label for="role" class="block mb-2 text-sm font-medium text-gray-900 white:text-black">Select a role</label>
+                <select id="role" v-model="form.role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 dark:placeholder-gray-400 white:text dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <option selected>Choose a role...</option>
+                    <option value="admin">Admin</option>
+                    <option value="public">Public</option>
+                </select>
             </div>
 
             <div class="mt-4">
