@@ -4,9 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Event;
+use Inertia\Inertia;
+use Illuminate\Support\Facades\Gate;
 
 class EventController extends Controller
 {
+    public function getPage()
+    {
+        if (! Gate::allows('data-entry')) {
+            abort(403);
+        }
+        return Inertia::render('Data');
+    }
+
+
     /**
      * Store a newly created resource in storage.
      */

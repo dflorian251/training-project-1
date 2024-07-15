@@ -26,9 +26,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/data', function() {
-    return Inertia::render('Data');
-})->name('data');
+// Route::get('/data', function() {
+//     return Inertia::render('Data');
+// })->name('data');
+
+Route::get('/data', [EventController::class, 'getPage'])->name('data');
 
 Route::get('/charts', function() {
     return Inertia::render('Charts');
