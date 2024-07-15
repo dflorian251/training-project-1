@@ -1,6 +1,7 @@
 <script setup>
 import Nav from "../Pages/Shared/Nav.vue";
-
+import GuestLayout from "@/Layouts/GuestLayout.vue";
+import NavLink from "@/Components/NavLink.vue";
 
 defineProps({
     canLogin: {
@@ -32,10 +33,14 @@ function handleImageError() {
 </script>
 
 <template>
-    <Nav/>
-    <header class="bg-gray-800 p-4 ">
-        <h1 class="text-white text-3xl">Hello, {{ name }}</h1>
-    </header>
-
-
+    <GuestLayout>
+        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+            <NavLink :href="route('login')" :active="route().current('dashboard')">
+                Log in
+            </NavLink>
+            <NavLink :href="route('register')" :active="route().current('data')">
+                Register
+            </NavLink>
+        </div>
+    </GuestLayout>
 </template>
