@@ -62,7 +62,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::orderBy('date', 'desc')->get(['date', 'people_attended']);
+        $events = Event::orderBy('date', 'asc')->get(['date', 'people_attended']);
 
         return $events;
     }
