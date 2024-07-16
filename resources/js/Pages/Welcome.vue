@@ -1,5 +1,4 @@
 <script setup>
-import Nav from "../Pages/Shared/Nav.vue";
 import GuestLayout from "@/Layouts/GuestLayout.vue";
 import NavLink from "@/Components/NavLink.vue";
 
