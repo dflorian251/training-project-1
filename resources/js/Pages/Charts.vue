@@ -18,14 +18,14 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 const data = {
     labels: [], // events.date
     datasets: [{
-        label: 'DATES',
+        label: 'People Attended',
         data: [] // events.people_attended
     }]
 };
 
 const options = {
     responsive: true,
-    aspectRatio: 2 | 3
+    aspectRatio: 2 | 4
 };
 
 let loaded = ref(false);
@@ -38,11 +38,32 @@ const fetchData = async () => {
 
         data.labels = fetchedData.map(event => event.date);
         data.datasets[0].data = fetchedData.map(event => event.people_attended);
-        // data.labels = JSON.stringify(data.labels);
-        // data.datasets[0].data = JSON.stringify(data.datasets[0].data);
 
-        console.log(`Labels: ${data.labels}`);
-        console.log(`Data: ${data.datasets[0].data}`);
+        let labels = [];
+        console.log(labels[0])
+        let data_people = [...data.datasets[0].data];
+
+        response.data.forEach( (data, index) => {
+
+            if (labels.includes(data.date)) {
+                // sum the people attended values
+                console.log(data.date);
+                let first_occurance = labels.indexOf(data.date) // find the index
+                // console.log(data_people[first_occurance]);
+                data_people[first_occurance] = data_people[first_occurance] + data_people[index];     // ?????
+            } else {
+                // append the date and its corresponding people_attended value
+                labels.push(data.date);
+                data_people.push(data_people[index]);
+            }
+        });
+
+        data.labels = [...labels];
+        data.datasets[0].data = [...data_people];
+
+        console.log(data.labels, data.datasets[0].data);
+
+
 
         loaded.value = true;
     } catch (error) {
