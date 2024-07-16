@@ -28,7 +28,7 @@ const options = {
     aspectRatio: 2 | 3
 };
 
-let loaded = false;
+let loaded = ref(false);
 
 const fetchData = async () => {
     try {
@@ -44,7 +44,7 @@ const fetchData = async () => {
         console.log(`Labels: ${data.labels}`);
         console.log(`Data: ${data.datasets[0].data}`);
 
-        loaded = true;
+        loaded.value = true;
     } catch (error) {
         console.error('There was an error retrieving the data:', error);
     }
