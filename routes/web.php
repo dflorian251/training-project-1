@@ -41,6 +41,8 @@ Route::get('/users', function() {
 
 Route::post('/submit-form', [EventController::class, 'store'])->name('submit-form');
 
+Route::get('/get-data', [EventController::class, 'index'])->name('get-data');
+
 
 
 require __DIR__.'/auth.php';

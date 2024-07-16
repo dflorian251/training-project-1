@@ -1,10 +1,8 @@
 <script setup>
 import PrimaryButton from "../Components/PrimaryButton.vue";
-import Checkbox from "../Components/Checkbox.vue";
 import InputLabel from "../Components/InputLabel.vue";
 import { ref } from 'vue';
 import axios from 'axios';
-import {createRouter} from 'vue-router';
 
 
 const form = ref({

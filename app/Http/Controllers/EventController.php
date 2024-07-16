@@ -60,9 +60,11 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function index()
     {
-        //
+        $events = Event::orderBy('date', 'desc')->get(['date', 'people_attended']);
+
+        return $events;
     }
 
 }
