@@ -45,4 +45,20 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    /**
+     * Get the user's role
+     *
+     * @param tinyint $admin
+     * @return string
+     */
+    public function getAdminAttribute($admin)
+    {
+        if ($admin === 1) {
+            return 'Admin';
+        }
+        return 'Public';
+    }
+
 }
+
