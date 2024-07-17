@@ -6,6 +6,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
+use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
 
 class UserController extends Controller
@@ -28,5 +31,34 @@ class UserController extends Controller
         }
 
         return $users;
+    }
+
+    public function getCreateUserPage() {
+        return Inertia::render('CreateUser');
+    }
+
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
+            'role' => 'required',
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ]);
+
+        if ($request->role === 'admin') {
+            $role = 1;
+        } else {
+            $role = 0;
+        }
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'admin' => $role,
+        ]);
+
+        return redirect()->route('users');
     }
 }

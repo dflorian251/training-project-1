@@ -38,6 +38,10 @@ Route::middleware('auth')->group(function() {
     })->name('charts');
 
     Route::get('/users', [UserController::class, 'getPage'])->name('users');
+
+    Route::get('/users/create-user', [UserController::class, 'getCreateUserPage'])->name('create-user');
+
+    Route::post('/users/store-created-user', [UserController::class, 'store'])->name('store-created-user');
 });
 
 
