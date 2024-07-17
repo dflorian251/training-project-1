@@ -40,28 +40,34 @@ const fetchData = async () => {
         data.datasets[0].data = fetchedData.map(event => event.people_attended);
 
         let labels = [];
-        console.log(labels[0])
+        let data_labels =[...data.labels];
+        // console.log(`Arrays: ${data.labels}\n${data.datasets[0].data}`);
         let data_people = [...data.datasets[0].data];
 
         response.data.forEach( (data, index) => {
 
             if (labels.includes(data.date)) {
                 // sum the people attended values
-                console.log(data.date);
-                let first_occurance = labels.indexOf(data.date) // find the index
-                // console.log(data_people[first_occurance]);
+                console.log(`Iteration through the array n.${index}`);
+                let first_occurance = data_labels.indexOf(data.date) // find the index
+                // console.log(`DATA: ${data.people_attended}`);
+                console.log(`We have a second instance of ${data.date} in the labels array. The first occurance of this date in the labels array is on position: ${first_occurance}`);
+                console.log(`Add ${data_people[first_occurance]} + ${data_people[index]}.\n At location: ${first_occurance}`);
                 data_people[first_occurance] = data_people[first_occurance] + data_people[index];     // ?????
+                console.log(`Sceenshot of data_people: ${data_people}`);
+                console.log(`Addition result's in: ${data_people[first_occurance]} saved in location ${first_occurance}`);
             } else {
                 // append the date and its corresponding people_attended value
                 labels.push(data.date);
-                data_people.push(data_people[index]);
+                // data_people.push(data_people[index]);
             }
         });
 
         data.labels = [...labels];
         data.datasets[0].data = [...data_people];
 
-        console.log(data.labels, data.datasets[0].data);
+        // console.log(data.labels, data.datasets[0].data);
+        console.log(labels, data_people);
 
 
 
