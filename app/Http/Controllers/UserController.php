@@ -27,7 +27,7 @@ class UserController extends Controller
         if (! Gate::allows('is-admin')) {
             $users = User::orderBy('name', 'asc')->where('admin', 0)->get(['name', 'email', 'admin']);
         } else {
-            $users = User::orderBy('name', 'asc')->get(['name', 'email', 'admin']);
+            $users = User::orderBy('name', 'asc')->get(['id', 'name', 'email', 'admin']);
         }
 
         return $users;
@@ -59,6 +59,16 @@ class UserController extends Controller
             'admin' => $role,
         ]);
 
+        return redirect()->route('users');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
         return redirect()->route('users');
     }
 }
