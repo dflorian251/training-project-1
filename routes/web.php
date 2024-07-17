@@ -44,6 +44,10 @@ Route::middleware('auth')->group(function() {
     Route::post('/users/store-created-user', [UserController::class, 'store'])->name('store-created-user');
 
     Route::get('/users/delete-user/{id}', [UserController::class, 'destroy'])->name('delete-user');
+
+    Route::get('/users/edit-user/{id}', [UserController::class, 'getEditUserPage'])->name('edit-user');
+
+    Route::get('/get-user/{id}', [UserController::class, 'getUser'])->name('get-user');
 });
 
 

@@ -23,7 +23,6 @@ class UserController extends Controller
 
     public function index()
     {
-
         if (! Gate::allows('is-admin')) {
             $users = User::orderBy('name', 'asc')->where('admin', 0)->get(['name', 'email', 'admin']);
         } else {
@@ -33,8 +32,21 @@ class UserController extends Controller
         return $users;
     }
 
+    public function getUser($id)
+    {
+        $user = User::findOrFail($id);
+        return $user;
+    }
+
     public function getCreateUserPage() {
         return Inertia::render('CreateUser');
+    }
+
+    public function getEditUserPage(string $id)
+    {
+        return Inertia::render('EditUser', [
+            'id' => $id,
+        ]);
     }
 
     public function store(Request $request): RedirectResponse

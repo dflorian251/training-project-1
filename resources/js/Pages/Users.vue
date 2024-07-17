@@ -54,7 +54,9 @@ onMounted(() => {
                     <div>{{ user.email }}</div>
                     <div>{{ user.admin }}</div>
                     <div v-if="admin == 'Admin'">
-                        <PrimaryButton class="bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50 active:bg-yellow-800">Modify</PrimaryButton>
+                        <PrimaryButton class="bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50 active:bg-yellow-800">
+                            <a :href="'/training-project-1/public/users/edit-user/' + String(user.id)">Modify</a>
+                        </PrimaryButton>
                         <PrimaryButton class="ml-3 bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 active:bg-red-800">
                             <a :href="'/training-project-1/public/users/delete-user/' + String(user.id)">Delete</a>
                         </PrimaryButton>

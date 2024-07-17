@@ -5,7 +5,15 @@ import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head, useForm } from '@inertiajs/vue3';
+import { ref, onMounted, defineProps } from 'vue';
 
+
+const props = defineProps({
+    id: {
+        type: String,
+        required: true,
+    },
+});
 
 const form = useForm({
     name: '',
@@ -15,21 +23,32 @@ const form = useForm({
     password_confirmation: '',
 });
 
-const submit = () => {
-    form.post(route('store-created-user'), {
-        onFinish: () => form.reset('password', 'password_confirmation'),
-    });
+let user = ref([]);
+
+const fetchData = async () => {
+    try {
+        const response = await axios.get(`/training-project-1/public/get-user/${props.id}`);
+        user.value = response.data;
+        user = user.value;
+        console.log(user);
+    } catch (error) {
+        console.error('There was an error retrieving the data:', error);
+    }
 };
+
+
+onMounted(() => {
+    fetchData();
+});
 </script>
 
 <template>
-
     <AuthenticatedLayout>
-        <Head title="Create User" />
+        <Head title="Edit User" />
         <div class="flex justify-center items-center min-h-screen bg-gray-100">
 
             <form @submit.prevent="submit" class="w-full max-w-lg bg-white p-8 rounded-lg shadow-md">
-                <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Create User</h1>
+                <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Edit User</h1>
                 <div>
                     <InputLabel for="name" value="Name" />
 
@@ -41,6 +60,7 @@ const submit = () => {
                         required
                         autofocus
                         autocomplete="name"
+                        :placeholder="user.name"
                     />
 
                     <InputError class="mt-2" :message="form.errors.name" />
@@ -56,6 +76,7 @@ const submit = () => {
                         v-model="form.email"
                         required
                         autocomplete="username"
+                        :placeholder="user.email"
                     />
 
                     <InputError class="mt-2" :message="form.errors.email" />
@@ -63,10 +84,20 @@ const submit = () => {
 
                 <div class="mt-4">
                     <label for="role" class="block mb-2 text-sm font-medium text-gray-900 white:text-black">Select a role</label>
-                    <select id="role" v-model="form.role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 dark:placeholder-gray-400 white:text dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <!-- <select id="role" v-model="form.role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 dark:placeholder-gray-400 white:text dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected>Choose a role...</option>
                         <option value="admin">Admin</option>
                         <option value="public">Public</option>
+                    </select> -->
+                    <!-- DOES NOT WORK THO / MUST RESEARCH HOW TO IMPLEMENT SELECTED OPTION -->
+                    <select id="role" v-if="user.admin == 'Admin'"  v-model="form.role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 dark:placeholder-gray-400 white:text dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option selected value="admin">Admin</option>
+                        <option value="public">Public</option>
+                    </select>
+
+                    <select id="role" v-else  v-model="form.role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 dark:placeholder-gray-400 white:text dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="admin">Admin</option>
+                        <option selected value="public">Public</option>
                     </select>
                 </div>
 
@@ -80,6 +111,7 @@ const submit = () => {
                         v-model="form.password"
                         required
                         autocomplete="new-password"
+                        :placeholder="user.password"
                     />
 
                     <InputError class="mt-2" :message="form.errors.password" />
@@ -95,6 +127,7 @@ const submit = () => {
                         v-model="form.password_confirmation"
                         required
                         autocomplete="new-password"
+                        :placeholder="user.password"
                     />
 
                     <InputError class="mt-2" :message="form.errors.password_confirmation" />
@@ -102,7 +135,7 @@ const submit = () => {
 
                 <div class="flex items-center justify-end mt-4">
                     <PrimaryButton class="ms-4" :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                        Create user
+                        Edit user
                     </PrimaryButton>
                 </div>
             </form>
