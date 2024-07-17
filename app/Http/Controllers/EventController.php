@@ -11,7 +11,7 @@ class EventController extends Controller
 {
     public function getPage()
     {
-        if (! Gate::allows('data-entry')) {
+        if (! Gate::allows('is-admin')) {
             abort(403);
         }
         return Inertia::render('Data');

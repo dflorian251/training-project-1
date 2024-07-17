@@ -13,6 +13,7 @@ class UserController extends Controller
     public function getPage()
     {
         return Inertia::render('Users', [
+            'name' => Auth::user()->name,
             'admin' => Auth::user()->admin,
         ]);
     }

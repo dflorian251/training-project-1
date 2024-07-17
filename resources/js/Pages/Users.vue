@@ -6,6 +6,10 @@ import List from '@/Components/List.vue';
 
 
 const props = defineProps({
+    name: {
+        type: String,
+        required: true,
+    },
     admin: {
         type: String,
         required: true,
@@ -32,7 +36,7 @@ onMounted(() => {
 <template>
     <AuthenticatedLayout>
 
-        <List :users="users" :admin="admin">
+        <List :users="users" :name="name" :admin="admin">
         </List>
     </AuthenticatedLayout>
 </template>
