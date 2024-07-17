@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -29,19 +30,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/data', [EventController::class, 'getPage'])->name('data');
+Route::middleware('auth')->group(function() {
+    Route::get('/data', [EventController::class, 'getPage'])->name('data');
 
-Route::get('/charts', function() {
-    return Inertia::render('Charts');
-})->name('charts');
+    Route::get('/charts', function() {
+        return Inertia::render('Charts');
+    })->name('charts');
 
-Route::get('/users', function() {
-    return Inertia::render('Users');
-})->name('users');
+    Route::get('/users', [UserController::class, 'getPage'])->name('users');
+});
+
+
 
 Route::post('/submit-form', [EventController::class, 'store'])->name('submit-form');
 
-Route::get('/get-data', [EventController::class, 'index'])->name('get-data');
+Route::get('/get-events', [EventController::class, 'index'])->name('get-events');
+
+Route::get('/get-users', [UserController::class, 'index'])->name('get-users');
 
 
 

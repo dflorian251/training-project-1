@@ -32,7 +32,7 @@ let loaded = ref(false);
 
 const fetchData = async () => {
     try {
-        const response = await axios.get('/training-project-1/public/get-data');
+        const response = await axios.get('/training-project-1/public/get-events');
         console.log('Data submitted successfully:', typeof(response.data));
         const fetchedData = response.data;
 
