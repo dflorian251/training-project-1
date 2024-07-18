@@ -27,7 +27,7 @@ class UserController extends Controller
     public function index()
     {
         if (! Gate::allows('is-admin')) {
-            $users = User::orderBy('name', 'asc')->where('admin', 0)->get(['name', 'email', 'admin']);
+            $users = User::orderBy('name', 'asc')->where('admin', 0)->get(['id', 'name', 'email', 'admin']);
         } else {
             $users = User::orderBy('name', 'asc')->get(['id', 'name', 'email', 'admin']);
         }
@@ -49,6 +49,7 @@ class UserController extends Controller
     {
         return Inertia::render('EditUser', [
             'id' => $id,
+            'admin' => Auth::user()->admin,
         ]);
     }
 

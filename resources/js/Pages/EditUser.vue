@@ -13,6 +13,10 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    admin: {
+        type: String,
+        required: true,
+    }
 });
 
 const form = ref({
@@ -40,9 +44,6 @@ const errors = ref({});
 
 const submit = async () => {
     try {
-        let temp = form.value;
-        let post_data = temp.value;
-        console.log(form.value);
         const response = await axios.post(`/training-project-1/public/users/store-edited-user/${props.id}`, form.value);
         console.log('User updated successfully', response.data);
         form.value = {
@@ -90,7 +91,7 @@ onMounted(() => {
                     <!-- <InputError class="mt-2" :message="form.errors.name" /> -->
                 </div>
 
-                <div class="mt-4">
+                <div class="mt-4" v-if="admin == 'Admin'">
                     <InputLabel for="email" value="Email" />
 
                     <TextInput
@@ -105,13 +106,8 @@ onMounted(() => {
                     <!-- <InputError class="mt-2" :message="form.errors.email" /> -->
                 </div>
 
-                <div class="mt-4">
+                <div class="mt-4" v-if="admin == 'Admin'">
                     <label for="role" class="block mb-2 text-sm font-medium text-gray-900 white:text-black">Select a role</label>
-                    <!-- <select id="role" v-model="form.role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 dark:placeholder-gray-400 white:text dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option selected>Choose a role...</option>
-                        <option value="admin">Admin</option>
-                        <option value="public">Public</option>
-                    </select> -->
                     <!-- DOES NOT WORK THO / MUST RESEARCH HOW TO IMPLEMENT SELECTED OPTION -->
                     <select id="role" v-if="user.admin == 'Admin'"  v-model="form.role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 dark:placeholder-gray-400 white:text dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected value="admin">Admin</option>
