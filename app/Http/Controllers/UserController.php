@@ -42,15 +42,22 @@ class UserController extends Controller
     }
 
     public function getCreateUserPage() {
+        if (! Gate::allows('is-admin')) {
+            abort(403);
+        }
         return Inertia::render('CreateUser');
     }
 
     public function getEditUserPage(string $id)
     {
-        return Inertia::render('EditUser', [
-            'id' => $id,
-            'admin' => Auth::user()->admin,
-        ]);
+        if (Gate::allows('is-admin') || strval(Auth::user()->id) === $id) {
+            return Inertia::render('EditUser', [
+                'id' => $id,
+                'admin' => Auth::user()->admin,
+            ]);
+        } else {
+            abort(403);
+        }
     }
 
     public function store(Request $request): RedirectResponse
@@ -131,6 +138,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
+        if (! Gate::allows('is-admin')) {
+            abort(403);
+        }
         $user = User::findOrFail($id);
         $user->delete();
         return redirect()->route('users');
