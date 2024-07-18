@@ -37,28 +37,31 @@ Route::middleware('auth')->group(function() {
         return Inertia::render('Charts');
     })->name('charts');
 
-    Route::get('/users', [UserController::class, 'getPage'])->name('users');
+    Route::prefix('/users')->group(function () {
+        Route::get('/', [UserController::class, 'getPage'])->name('users');
 
-    Route::get('/users/create-user', [UserController::class, 'getCreateUserPage'])->name('create-user');
+        Route::get('/create-user', [UserController::class, 'getCreateUserPage'])->name('create-user');
 
-    Route::post('/users/store-created-user', [UserController::class, 'store'])->name('store-created-user');
+        Route::post('/store-created-user', [UserController::class, 'store'])->name('store-created-user');
 
-    Route::get('/users/delete-user/{id}', [UserController::class, 'destroy'])->name('delete-user');
+        Route::get('/delete-user/{id}', [UserController::class, 'destroy'])->name('delete-user');
 
-    Route::get('/users/edit-user/{id}', [UserController::class, 'getEditUserPage'])->name('edit-user');
+        Route::get('/edit-user/{id}', [UserController::class, 'getEditUserPage'])->name('edit-user');
+
+        Route::post('/store-edited-user/{id}', [UserController::class, 'update'])->name('store-edited-user');
+    });
 
     Route::get('/get-user/{id}', [UserController::class, 'getUser'])->name('get-user');
 
-    Route::post('/users/store-edited-user/{id}', [UserController::class, 'update'])->name('store-edited-user');
+    Route::post('/submit-form', [EventController::class, 'store'])->name('submit-form');
+
+    Route::get('/get-events', [EventController::class, 'index'])->name('get-events');
+
+    Route::get('/get-users', [UserController::class, 'index'])->name('get-users');
 });
 
 
 
-Route::post('/submit-form', [EventController::class, 'store'])->name('submit-form');
-
-Route::get('/get-events', [EventController::class, 'index'])->name('get-events');
-
-Route::get('/get-users', [UserController::class, 'index'])->name('get-users');
 
 
 
