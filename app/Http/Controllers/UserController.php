@@ -8,8 +8,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Http\RedirectResponse;
 use Inertia\Inertia;
+
+
 
 class UserController extends Controller
 {
@@ -72,6 +75,54 @@ class UserController extends Controller
         ]);
 
         return redirect()->route('users');
+    }
+
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, string $id)
+    {
+        try {
+            // Log the request data
+            Log::info('Update request data:', $request->all());
+
+            // Find the user by ID
+            $user = User::findOrFail($id);
+
+            // Log the user data before update
+            Log::info('User before update:', $user->toArray());
+
+            // Update fields if they are provided
+            if ($request->filled('name')) {
+                $user->name = $request->name;
+            }
+            if ($request->filled('email')) {
+                $user->email = $request->email;
+            }
+            if ($request->filled('password')) {
+                $user->password = Hash::make($request->password);
+            }
+            if ($request->filled('role')) {
+                $user->admin = $request->role === 'admin' ? 1 : 0;
+            }
+
+            // Save the user
+            $user->save();
+
+            // Log the user data after update
+            Log::info('User after update:', $user->toArray());
+
+            return redirect()->route('edit-user')->with('success', 'User updated successfully.');
+        } catch (\Exception $e) {
+            // Log the exception
+            Log::error('Error updating user:', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+
+            return redirect()->route('edit-user')->with('error', 'Failed to update user.');
+        }
     }
 
     /**

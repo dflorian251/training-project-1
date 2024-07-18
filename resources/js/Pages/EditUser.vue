@@ -15,7 +15,7 @@ const props = defineProps({
     },
 });
 
-const form = useForm({
+const form = ref({
     name: '',
     email: '',
     role: '',
@@ -36,6 +36,31 @@ const fetchData = async () => {
     }
 };
 
+const errors = ref({});
+
+const submit = async () => {
+    try {
+        let temp = form.value;
+        let post_data = temp.value;
+        console.log(form.value);
+        const response = await axios.post(`/training-project-1/public/users/store-edited-user/${props.id}`, form.value);
+        console.log('User updated successfully', response.data);
+        form.value = {
+            name: '',
+            email: '',
+            role: '',
+            password: '',
+            password_confirmation: '',
+        };
+    } catch (error) {
+        if (error.response && error.response.status === 422) {
+            // Handle validation errors
+            errors.value = error.response.data.errors;
+        } else {
+            console.error('An error occurred:', error);
+        }
+    }
+};
 
 onMounted(() => {
     fetchData();
@@ -57,13 +82,12 @@ onMounted(() => {
                         type="text"
                         class="mt-1 block w-full"
                         v-model="form.name"
-                        required
                         autofocus
                         autocomplete="name"
                         :placeholder="user.name"
                     />
 
-                    <InputError class="mt-2" :message="form.errors.name" />
+                    <!-- <InputError class="mt-2" :message="form.errors.name" /> -->
                 </div>
 
                 <div class="mt-4">
@@ -74,12 +98,11 @@ onMounted(() => {
                         type="email"
                         class="mt-1 block w-full"
                         v-model="form.email"
-                        required
                         autocomplete="username"
                         :placeholder="user.email"
                     />
 
-                    <InputError class="mt-2" :message="form.errors.email" />
+                    <!-- <InputError class="mt-2" :message="form.errors.email" /> -->
                 </div>
 
                 <div class="mt-4">
@@ -109,12 +132,11 @@ onMounted(() => {
                         type="password"
                         class="mt-1 block w-full"
                         v-model="form.password"
-                        required
                         autocomplete="new-password"
                         :placeholder="user.password"
                     />
 
-                    <InputError class="mt-2" :message="form.errors.password" />
+                    <!-- <InputError class="mt-2" :message="form.errors.password" /> -->
                 </div>
 
                 <div class="mt-4">
@@ -125,12 +147,11 @@ onMounted(() => {
                         type="password"
                         class="mt-1 block w-full"
                         v-model="form.password_confirmation"
-                        required
                         autocomplete="new-password"
                         :placeholder="user.password"
                     />
 
-                    <InputError class="mt-2" :message="form.errors.password_confirmation" />
+                    <!-- <InputError class="mt-2" :message="form.errors.password_confirmation" /> -->
                 </div>
 
                 <div class="flex items-center justify-end mt-4">

@@ -15,6 +15,8 @@ const form = useForm({
     password_confirmation: '',
 });
 
+const errors = ref({});
+
 const submit = () => {
     form.post(route('register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
@@ -41,7 +43,7 @@ const submit = () => {
                     autocomplete="name"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="errors.value.name" />
             </div>
 
             <div class="mt-4">
@@ -56,7 +58,7 @@ const submit = () => {
                     autocomplete="username"
                 />
 
-                <InputError class="mt-2" :message="form.errors.email" />
+                <InputError class="mt-2" :message="errors.value.email" />
             </div>
 
             <div class="mt-4">
@@ -80,7 +82,7 @@ const submit = () => {
                     autocomplete="new-password"
                 />
 
-                <InputError class="mt-2" :message="form.errors.password" />
+                <InputError class="mt-2" :message="errors.value.password" />
             </div>
 
             <div class="mt-4">
@@ -95,7 +97,7 @@ const submit = () => {
                     autocomplete="new-password"
                 />
 
-                <InputError class="mt-2" :message="form.errors.password_confirmation" />
+                <InputError class="mt-2" :message="errors.value.password_confirmation" />
             </div>
 
             <div class="flex items-center justify-end mt-4">

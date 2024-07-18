@@ -48,6 +48,8 @@ Route::middleware('auth')->group(function() {
     Route::get('/users/edit-user/{id}', [UserController::class, 'getEditUserPage'])->name('edit-user');
 
     Route::get('/get-user/{id}', [UserController::class, 'getUser'])->name('get-user');
+
+    Route::post('/users/store-edited-user/{id}', [UserController::class, 'update'])->name('store-edited-user');
 });
 
 
