@@ -48,7 +48,6 @@ const submit = async () => {
     try {
         // const response = await axios.patch(`${baseUrl}/store-edited-user/${props.id}`);
         const response = await axios.patch(`/training-project-1/public/users/store-edited-user/${props.id}`, form.value);
-        console.log('User updated successfully', response.data);
         form.value = {
             name: '',
             email: '',
@@ -56,6 +55,7 @@ const submit = async () => {
             password: '',
             password_confirmation: '',
         };
+        window.location.reload();
     } catch (error) {
         if (error.response && error.response.status === 422) {
             // Handle validation errors
