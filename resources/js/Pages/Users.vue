@@ -37,7 +37,7 @@ onMounted(() => {
     <AuthenticatedLayout>
         <div class="container mx-auto p-4">
         <div class="bg-gray-100 shadow-md rounded-lg overflow-hidden">
-                <PrimaryButton v-if="admin == 'Admin'" class="mb-3 bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50 active:bg-green-800">
+                <PrimaryButton v-if="role == 'Admin'" class="mb-3 bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50 active:bg-green-800">
                     <a href="/training-project-1/public/users/create-user" class="">
                         Create User
                     </a>
