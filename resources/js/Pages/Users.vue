@@ -10,7 +10,7 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    admin: {
+    role: {
         type: String,
         required: true,
     }
@@ -52,8 +52,8 @@ onMounted(() => {
                 <div v-for="(user, index) in users" :key="index" class="grid grid-cols-4 p-4">
                     <div>{{ user.name }}</div>
                     <div>{{ user.email }}</div>
-                    <div>{{ user.admin }}</div>
-                    <div v-if="admin == 'Admin'">
+                    <div>{{ user.role }}</div>
+                    <div v-if="role == 'admin'">
                         <PrimaryButton class="bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50 active:bg-yellow-800">
                             <a :href="'/training-project-1/public/users/edit-user/' + String(user.id)">Modify</a>
                         </PrimaryButton>

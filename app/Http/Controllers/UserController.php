@@ -20,16 +20,16 @@ class UserController extends Controller
     {
         return Inertia::render('Users', [
             'name' => Auth::user()->name,
-            'admin' => Auth::user()->admin,
+            'role' => Auth::user()->role,
         ]);
     }
 
     public function index()
     {
         if (! Gate::allows('is-admin')) {
-            $users = User::orderBy('name', 'asc')->where('admin', 0)->get(['id', 'name', 'email', 'admin']);
+            $users = User::orderBy('name', 'asc')->where('role', 'public')->get(['id', 'name', 'email', 'role']);
         } else {
-            $users = User::orderBy('name', 'asc')->get(['id', 'name', 'email', 'admin']);
+            $users = User::orderBy('name', 'asc')->get(['id', 'name', 'email', 'role']);
         }
 
         return $users;
@@ -53,7 +53,7 @@ class UserController extends Controller
         if (Gate::allows('is-admin') || strval(Auth::user()->id) === $id) {
             return Inertia::render('EditUser', [
                 'id' => $id,
-                'admin' => Auth::user()->admin,
+                'role' => Auth::user()->role,
             ]);
         } else {
             abort(403);
@@ -69,17 +69,11 @@ class UserController extends Controller
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
-        if ($request->role === 'admin') {
-            $role = 1;
-        } else {
-            $role = 0;
-        }
-
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'admin' => $role,
+            'role' => $request->role,
         ]);
 
         return redirect()->route('users');
@@ -112,7 +106,7 @@ class UserController extends Controller
                 $user->password = Hash::make($request->password);
             }
             if ($request->filled('role')) {
-                $user->admin = $request->role === 'admin' ? 1 : 0;
+                $user->role = $request->role;
             }
 
             // Save the user

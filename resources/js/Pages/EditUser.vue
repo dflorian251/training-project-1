@@ -13,7 +13,7 @@ const props = defineProps({
         type: String,
         required: true,
     },
-    admin: {
+    role: {
         type: String,
         required: true,
     }
@@ -91,7 +91,7 @@ onMounted(() => {
                     <!-- <InputError class="mt-2" :message="form.errors.name" /> -->
                 </div>
 
-                <div class="mt-4" v-if="admin == 'Admin'">
+                <div class="mt-4" v-if="role == 'admin'">
                     <InputLabel for="email" value="Email" />
 
                     <TextInput
@@ -106,10 +106,10 @@ onMounted(() => {
                     <!-- <InputError class="mt-2" :message="form.errors.email" /> -->
                 </div>
 
-                <div class="mt-4" v-if="admin == 'Admin'">
+                <div class="mt-4" v-if="role == 'admin'">
                     <label for="role" class="block mb-2 text-sm font-medium text-gray-900 white:text-black">Select a role</label>
                     <!-- DOES NOT WORK THO / MUST RESEARCH HOW TO IMPLEMENT SELECTED OPTION -->
-                    <select id="role" v-if="user.admin == 'Admin'"  v-model="form.role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 dark:placeholder-gray-400 white:text dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select id="role" v-if="user.role == 'admin'"  v-model="form.role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 dark:placeholder-gray-400 white:text dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected value="admin">Admin</option>
                         <option value="public">Public</option>
                     </select>
