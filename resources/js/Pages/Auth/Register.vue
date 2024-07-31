@@ -5,6 +5,7 @@ import InputLabel from '@/Components/InputLabel.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
 import TextInput from '@/Components/TextInput.vue';
 import { Head, Link, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 
 const form = useForm({
@@ -19,6 +20,9 @@ const errors = ref({});
 
 const submit = () => {
     form.post(route('register'), {
+        onError: (errors) => {
+            errors.value = errors;
+        },
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
 };
@@ -43,7 +47,7 @@ const submit = () => {
                     autocomplete="name"
                 />
 
-                <InputError class="mt-2" :message="errors.value.name" />
+                <InputError class="mt-2" :message="form.errors.name" />
             </div>
 
             <div class="mt-4">
@@ -58,7 +62,7 @@ const submit = () => {
                     autocomplete="username"
                 />
 
-                <InputError class="mt-2" :message="errors.value.email" />
+                <InputError class="mt-2" :message="form.errors.email" />
             </div>
 
             <div class="mt-4">
@@ -82,7 +86,7 @@ const submit = () => {
                     autocomplete="new-password"
                 />
 
-                <InputError class="mt-2" :message="errors.value.password" />
+                <InputError class="mt-2" :message="form.errors.password" />
             </div>
 
             <div class="mt-4">
@@ -97,7 +101,7 @@ const submit = () => {
                     autocomplete="new-password"
                 />
 
-                <InputError class="mt-2" :message="errors.value.password_confirmation" />
+                <InputError class="mt-2" :message="form.errors.password_confirmation" />
             </div>
 
             <div class="flex items-center justify-end mt-4">

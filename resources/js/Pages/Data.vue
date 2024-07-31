@@ -33,7 +33,6 @@ const submitForm = async () => {
 
 <template>
     <AuthenticatedLayout>
-        <!-- <Form class="mt-10"/> -->
         <div class="bg-white p-6 rounded shadow-md max-w-md mx-auto">
             <h1 class="text-3xl text-white bg-gray-800 p-4 rounded mb-6 text-center">Create Event</h1>
             <form @submit.prevent="submitForm" method="POST" class="space-y-4">
