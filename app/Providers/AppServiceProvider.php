@@ -22,16 +22,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('data-entry', function (User $user) {
-            return $user->admin === 1
-            ? Response::allow()
-            : Response::deny('You must be an administrator.');
-        });
-
         Gate::define('is-admin', function (User $user) {
-            return $user->admin === 'Admin'
-            ? Response::allow()
-            : Response::deny('You must be an administrator.');
+            return $user->role === 'admin'
+                ? Response::allow()
+                : Response::deny('You must be an administrator.');
         });
     }
 }
