@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 
@@ -86,14 +87,8 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         try {
-            // Log the request data
-            Log::info('Update request data:', $request->all());
-
             // Find the user by ID
             $user = User::findOrFail($id);
-
-            // Log the user data before update
-            Log::info('User before update:', $user->toArray());
 
             // Update fields if they are provided
             if ($request->filled('name')) {
@@ -105,17 +100,13 @@ class UserController extends Controller
             if ($request->filled('password')) {
                 $user->password = Hash::make($request->password);
             }
-            if ($request->filled('role')) {
-                $user->role = $request->role;
+            if ($request->filled('user_role')) {
+                $user->role = $request->user_role;
             }
-
             // Save the user
-            $user->save();
+            $user->update();
 
-            // Log the user data after update
-            Log::info('User after update:', $user->toArray());
-
-            return redirect()->route('edit-user')->with('success', 'User updated successfully.');
+            return response()->json(['success' => true, 'redirect_url' => route('users')]);
         } catch (\Exception $e) {
             // Log the exception
             Log::error('Error updating user:', [

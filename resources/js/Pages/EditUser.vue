@@ -22,19 +22,21 @@ const props = defineProps({
 const form = ref({
     name: '',
     email: '',
-    role: '',
+    user_role: '',
     password: '',
     password_confirmation: '',
 });
 
 let user = ref([]);
 
+const baseUrl = window.location.origin;
+
 const fetchData = async () => {
     try {
+        // const response = await axios.get(`${baseUrl}/get-user/${props.id}`);
         const response = await axios.get(`/training-project-1/public/get-user/${props.id}`);
         user.value = response.data;
         user = user.value;
-        console.log(user);
     } catch (error) {
         console.error('There was an error retrieving the data:', error);
     }
@@ -44,7 +46,8 @@ const errors = ref({});
 
 const submit = async () => {
     try {
-        const response = await axios.post(`/training-project-1/public/users/store-edited-user/${props.id}`, form.value);
+        // const response = await axios.patch(`${baseUrl}/store-edited-user/${props.id}`);
+        const response = await axios.patch(`/training-project-1/public/users/store-edited-user/${props.id}`, form.value);
         console.log('User updated successfully', response.data);
         form.value = {
             name: '',
@@ -109,12 +112,12 @@ onMounted(() => {
                 <div class="mt-4" v-if="role == 'admin'">
                     <label for="role" class="block mb-2 text-sm font-medium text-gray-900 white:text-black">Select a role</label>
                     <!-- DOES NOT WORK THO / MUST RESEARCH HOW TO IMPLEMENT SELECTED OPTION -->
-                    <select id="role" v-if="user.role == 'admin'"  v-model="form.role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 dark:placeholder-gray-400 white:text dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select id="role" v-if="user.role == 'admin'"  v-model="form.user_role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 dark:placeholder-gray-400 white:text dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option selected value="admin">Admin</option>
                         <option value="public">Public</option>
                     </select>
 
-                    <select id="role" v-else  v-model="form.role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 dark:placeholder-gray-400 white:text dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                    <select id="role" v-else  v-model="form.user_role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 white:bg-gray-700 white:border-gray-600 dark:placeholder-gray-400 white:text dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="admin">Admin</option>
                         <option selected value="public">Public</option>
                     </select>
