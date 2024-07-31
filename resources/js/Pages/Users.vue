@@ -18,8 +18,11 @@ const props = defineProps({
 
 let users = ref([]);
 
+const baseUrl = window.location.origin;
+
 const fetchData = async () => {
     try {
+        // const response = await axios.get(`${baseUrl}/get-users`);
         const response = await axios.get('/training-project-1/public/get-users');
         users.value = response.data;
     } catch (error) {
@@ -39,6 +42,7 @@ onMounted(() => {
         <div class="bg-gray-100 shadow-md rounded-lg overflow-hidden">
                 <PrimaryButton v-if="role == 'Admin'" class="mb-3 bg-green-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-opacity-50 active:bg-green-800">
                     <a href="/training-project-1/public/users/create-user" class="">
+                    <!-- <a :href= "baseUrl + '/users/create-user'" ></a> -->
                         Create User
                     </a>
                 </PrimaryButton>
@@ -56,14 +60,17 @@ onMounted(() => {
                     <div v-if="role == 'admin'">
                         <PrimaryButton class="bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50 active:bg-yellow-800">
                             <a :href="'/training-project-1/public/users/edit-user/' + String(user.id)">Modify</a>
+                            <!-- <a :href="baseUrl + 'users/edit-user/' + String(user.id)">Modify</a> -->
                         </PrimaryButton>
                         <PrimaryButton class="ml-3 bg-red-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-600 focus:ring-opacity-50 active:bg-red-800">
                             <a :href="'/training-project-1/public/users/delete-user/' + String(user.id)">Delete</a>
+                            <!-- <a :href="baseUrl + 'users/edit-user/' + String(user.id)">Delete</a> -->
                         </PrimaryButton>
                     </div>
                     <div v-else-if="name == user.name">
                         <PrimaryButton class="bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-600 focus:ring-opacity-50 active:bg-yellow-800">
                             <a :href="'/training-project-1/public/users/edit-user/' + user.id">Modify</a>
+                            <!-- <a :href="baseUrl + 'users/edit-user/' + String(user.id)">Modify</a> -->
                         </PrimaryButton>
                     </div>
                 </div>

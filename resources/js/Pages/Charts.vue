@@ -30,8 +30,25 @@ const options = {
 
 let loaded = ref(false);
 
+const baseUrl = window.location.origin;
+
+const processData = (people_attended, dates) => {
+    dates.forEach((date, index, arr)=> {
+        //The array is on ascending order
+        //So If we have duplicate dates, then they are gonna be next ot each other
+        //Thus it makes sanse to check only the next element
+        if (date === arr[index + 1]) {
+            //Merge the date's stats
+            people_attended[index] = people_attended[index] + people_attended[index + 1];
+            people_attended.splice(index + 1, 1);
+            dates.splice(index + 1, 1);
+        }
+    });
+}
+
 const fetchData = async () => {
     try {
+        // const response = await axios.get(`${baseUrl}/get-events`);
         const response = await axios.get('/training-project-1/public/get-events');
         console.log('Data submitted successfully:', typeof(response.data));
         const fetchedData = response.data;
@@ -39,37 +56,7 @@ const fetchData = async () => {
         data.labels = fetchedData.map(event => event.date);
         data.datasets[0].data = fetchedData.map(event => event.people_attended);
 
-        let labels = [];
-        let data_labels =[...data.labels];
-        // console.log(`Arrays: ${data.labels}\n${data.datasets[0].data}`);
-        let data_people = [...data.datasets[0].data];
-
-        response.data.forEach( (data, index) => {
-
-            if (labels.includes(data.date)) {
-                // sum the people attended values
-                console.log(`Iteration through the array n.${index}`);
-                let first_occurance = data_labels.indexOf(data.date) // find the index
-                // console.log(`DATA: ${data.people_attended}`);
-                console.log(`We have a second instance of ${data.date} in the labels array. The first occurance of this date in the labels array is on position: ${first_occurance}`);
-                console.log(`Add ${data_people[first_occurance]} + ${data_people[index]}.\n At location: ${first_occurance}`);
-                data_people[first_occurance] = data_people[first_occurance] + data_people[index];     // ?????
-                console.log(`Sceenshot of data_people: ${data_people}`);
-                console.log(`Addition result's in: ${data_people[first_occurance]} saved in location ${first_occurance}`);
-            } else {
-                // append the date and its corresponding people_attended value
-                labels.push(data.date);
-                // data_people.push(data_people[index]);
-            }
-        });
-
-        data.labels = [...labels];
-        data.datasets[0].data = [...data_people];
-
-        // console.log(data.labels, data.datasets[0].data);
-        console.log(labels, data_people);
-
-
+        processData(data.datasets[0].data, data.labels);
 
         loaded.value = true;
     } catch (error) {

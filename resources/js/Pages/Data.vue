@@ -13,8 +13,11 @@ const form = ref({
   people_attended: '',
 });
 
+// const baseUrl = window.location.origin;
+
 const submitForm = async () => {
   try {
+    // const response = await axios.get(`${baseUrl}/submit-form`, form.value);
     const response = await axios.post('/training-project-1/public/submit-form', form.value);
 
     window.location = response.data.redirect;

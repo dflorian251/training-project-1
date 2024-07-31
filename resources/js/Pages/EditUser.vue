@@ -46,8 +46,8 @@ const errors = ref({});
 
 const submit = async () => {
     try {
-        // const response = await axios.patch(`${baseUrl}/store-edited-user/${props.id}`);
-        const response = await axios.patch(`/training-project-1/public/users/store-edited-user/${props.id}`, form.value);
+        // await axios.patch(`${baseUrl}/store-edited-user/${props.id}`);
+        await axios.patch(`/training-project-1/public/users/store-edited-user/${props.id}`, form.value);
         form.value = {
             name: '',
             email: '',
