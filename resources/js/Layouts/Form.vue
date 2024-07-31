@@ -14,6 +14,8 @@ const form = ref({
 
 const submitForm = async () => {
   try {
+    // const baseUrl = window.location.origin;
+    // const response = await axios.post(`${baseUrl}/submit-form`, form.value).then(...)
     const response = await axios.post('/training-project-1/public/submit-form', form.value).then(function (response) {
         window.location = response.data.redirect;
     });
@@ -21,6 +23,7 @@ const submitForm = async () => {
     // errors.value = {}; // Clear errors on successful submission
     if (response.data.redirect_url) {
         // router.push(response.data.redirect_url); // Redirect to the URL provided by the server
+        // this.$router.push(baseUrl);
         this.$router.push('/training-project-1/public/');
         console.log('Redirected...');
     }
@@ -34,8 +37,6 @@ const submitForm = async () => {
   <div class="bg-white p-6 rounded shadow-md max-w-md mx-auto">
     <h1 class="text-3xl text-white bg-gray-800 p-4 rounded mb-6 text-center">Create Event</h1>
     <form @submit.prevent="submitForm" method="POST" class="space-y-4">
-        <!-- CSRF Token for Laravel -->
-        <input type="hidden" name="_token" :value="csrf_token">
 
         <div>
         <label for="name" class="block text-gray-700">Event Name</label>
